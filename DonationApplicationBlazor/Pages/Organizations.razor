@@ -1,0 +1,45 @@
+﻿@page "/Organizations"
+@using System.Text.Json
+
+<h3>Organizations</h3>
+
+@foreach(var org in orgs)
+{
+    <p>
+        <b>*@org.OrganizationName</b>
+    </p>
+}
+
+@code {
+    public class OrganizationsModel
+    {
+        public int Id { get; set; }
+        public string OrganizationName { get; set; }
+        public string OrganizationType { get; set; }
+        public string OrganizationDescription { get; set; }
+        public string OrganizationCountryName { get; set; }
+        public string OrganizationCountryCode { get; set; }
+        public string OrganizationEmail { get; set; }
+        public string OrganizationPhone { get; set; }
+        public string OrganizationCode { get; set; }
+    }
+
+    string API_URL = "http://localhost:5109/";
+
+    private IEnumerable<OrganizationsModel> orgs = Array.Empty<OrganizationsModel>();
+
+    private async Task refreshList()
+    {
+        HttpClient httpClient = new HttpClient();
+        HttpResponseMessage response = await httpClient.GetAsync(API_URL + "api/Organizations/GetOrganizations");
+        httpClient.Dispose();
+        using var responseStream = await response.Content.ReadAsStreamAsync();
+        orgs = await JsonSerializer.DeserializeAsync<IEnumerable<OrganizationsModel>>(responseStream);
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await this.refreshList();
+    }
+}
