@@ -1,5 +1,6 @@
 ﻿@page "/Organizations"
 @using System.Text.Json
+@using DonationApplicationBlazor.Models
 
 <h3>Organizations</h3>
 
@@ -11,18 +12,6 @@
 }
 
 @code {
-    public class OrganizationsModel
-    {
-        public int Id { get; set; }
-        public string OrganizationName { get; set; }
-        public string OrganizationType { get; set; }
-        public string OrganizationDescription { get; set; }
-        public string OrganizationCountryName { get; set; }
-        public string OrganizationCountryCode { get; set; }
-        public string OrganizationEmail { get; set; }
-        public string OrganizationPhone { get; set; }
-        public string OrganizationCode { get; set; }
-    }
 
     string API_URL = "http://localhost:5109/";
 
